@@ -1,36 +1,38 @@
 <!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Anchors – what's worse</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Hard Things – what's worse</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 2rem;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #e6f1ff, #f0e4ff);
-      color: #333;
+      background: linear-gradient(135deg, #2f2d5d, #6c4d73);
+      color: #eee;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
+      transition: background 1.5s ease;
     }
 
     h1 {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
       margin-bottom: 0.5rem;
-      opacity: 0.6;
+      opacity: 0.8;
     }
 
     .subtitle {
-      font-size: 0.9rem;
-      opacity: 0.4;
+      font-size: 1rem;
+      opacity: 0.5;
       margin-bottom: 2rem;
     }
 
-    .anchors {
+    .disliked-list {
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -39,10 +41,9 @@
     }
 
     .card {
-      background: #ffffffcc;
+      background: #ffffff22;
       border-radius: 16px;
       padding: 1rem 1.2rem;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -52,134 +53,138 @@
       background: none;
       border: none;
       font-size: 0.9rem;
-      color: #666;
+      color: #bbb;
       cursor: pointer;
     }
 
-    .affirmation-box {
+    .garbage-box {
       margin-top: 3rem;
-      background: #ffffffaa;
+      background: #3b365c;
       border-radius: 12px;
       padding: 1rem 1.5rem;
-      font-size: 1rem;
       max-width: 500px;
+      width: 100%;
       text-align: center;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
-    .affirmation-box button {
+    .garbage-box textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      resize: vertical;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .garbage-box button {
       margin-top: 1rem;
-      padding: 0.4rem 1rem;
-      font-size: 0.9rem;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
       border: none;
       border-radius: 20px;
-      background: #eaeaea;
-      cursor: pointer;
-    }
-
-    .add-form {
-      margin-top: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .add-form input {
-      padding: 0.5rem;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-    }
-
-    .back-home {
-      margin-top: 2rem;
-      text-decoration: none;
-      font-size: 0.9rem;
-      color: #555;
       background: #fff;
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      color: #444;
     }
 
-    .calming-visuals {
-      margin-top: 3rem;
-      max-width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
+    .response {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: #fff9f0;
+      animation: fadeIn 1s ease-in-out;
     }
 
-    .calming-visuals img {
+    .visual {
+      margin-top: 2rem;
       max-width: 300px;
+    }
+
+    .visual img {
+      width: 100%;
       border-radius: 16px;
+    }
+
+    a.back-home {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <h1>my anchors</h1>
-  <div class="subtitle">your saved grounding questions</div>
+  <h1>the hard things</h1>
+  <div class="subtitle">your soft little landfill</div>
 
-  <div class="anchors" id="anchorList"></div>
+  <div class="disliked-list" id="dislikedList"></div>
 
-  <div class="affirmation-box" id="affirmationBox">
-    <div id="affirmationText">you’ve made it to now — and that’s more than enough.</div>
-    <button onclick="newAffirmation()">new affirmation</button>
-    <div class="add-form">
-      <input type="text" id="customAffirmation" placeholder="write your own...">
-      <button onclick="addAffirmation()">add to affirmations</button>
-    </div>
+  <div class="garbage-box">
+    <textarea id="garbageInput" rows="4" placeholder="what are you angry about?"></textarea>
+    <button onclick="submitGarbage()">submit</button>
+    <div class="response" id="response"></div>
+    <div class="visual" id="visual"></div>
   </div>
 
   <a href="index.html" class="back-home">← back to homepage</a>
 
-  <div class="calming-visuals">
-    <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="gentle clouds">
-    <img src="https://media.giphy.com/media/duzpaTbCUy9Vu/giphy.gif" alt="soft waves">
-  </div>
-
   <script>
-    // Load and display saved questions
-    const anchorList = document.getElementById('anchorList');
-    const saved = JSON.parse(localStorage.getItem('liked-questions')) || [];
-    if (saved.length > 0) {
-      saved.forEach((q, i) => {
+    const disliked = JSON.parse(localStorage.getItem('disliked-questions')) || [];
+    const dislikedList = document.getElementById('dislikedList');
+    if (disliked.length > 0) {
+      disliked.forEach((q, i) => {
         const div = document.createElement('div');
         div.className = 'card';
-        div.innerHTML = `<span>${q}</span><button onclick="removeAnchor(${i})">remove</button>`;
-        anchorList.appendChild(div);
+        div.innerHTML = `<span>${q}</span><button onclick="removeDisliked(${i})">remove</button>`;
+        dislikedList.appendChild(div);
       });
     } else {
-      anchorList.innerHTML = "<div style='opacity:0.5;'>You haven’t saved anything yet.</div>";
+      dislikedList.innerHTML = "<div style='opacity:0.5;'>Nothing here yet. That’s kind of nice.</div>";
     }
 
-    function removeAnchor(index) {
-      saved.splice(index, 1);
-      localStorage.setItem('liked-questions', JSON.stringify(saved));
+    function removeDisliked(index) {
+      disliked.splice(index, 1);
+      localStorage.setItem('disliked-questions', JSON.stringify(disliked));
       location.reload();
     }
 
-    const affirmations = [
-      "you’ve made it to now — and that’s more than enough.",
-      "softness is not weakness.",
-      "you’re allowed to take up space, even in silence.",
-      "you’re not behind. you’re arriving."
+    const softResponses = [
+      "it's going to be okay",
+      "this will pass",
+      "you're so brave",
+      "thank you for telling me that",
+      "you're doing so good"
     ];
 
-    function newAffirmation() {
-      const text = affirmations[Math.floor(Math.random() * affirmations.length)];
-      document.getElementById('affirmationText').textContent = text;
-    }
+    const visuals = [
+      "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+      "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+      "https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif"
+    ];
 
-    function addAffirmation() {
-      const input = document.getElementById('customAffirmation');
-      const val = input.value.trim();
-      if (val) {
-        affirmations.push(val);
-        input.value = '';
-        alert("Added your affirmation.");
-      }
+    function submitGarbage() {
+      const input = document.getElementById('garbageInput');
+      const responseBox = document.getElementById('response');
+      const visualBox = document.getElementById('visual');
+
+      if (input.value.trim() === '') return;
+
+      const message = softResponses[Math.floor(Math.random() * softResponses.length)];
+      const visual = visuals[Math.floor(Math.random() * visuals.length)];
+
+      responseBox.textContent = message;
+      visualBox.innerHTML = `<img src="${visual}" alt="calming visual">`;
+      input.value = '';
+
+      // change background to morning theme
+      document.body.style.background = "linear-gradient(135deg, #fdf6e3, #d0f0f7)";
+      document.body.style.color = "#333";
     }
   </script>
 </body>
