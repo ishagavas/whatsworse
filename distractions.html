@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Distractions – what's worse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #fde2e4, #d0f4de);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.5;
+      margin-bottom: 2rem;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      width: 100%;
+      max-width: 800px;
+      z-index: 1;
+    }
+
+    .category-button {
+      padding: 1.2rem;
+      border: none;
+      border-radius: 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: #fff;
+      color: #444;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .category-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Floating background dots */
+    .dot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #fff;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 12s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-20px) scale(1.2); }
+      100% { transform: translateY(0px) scale(1); }
+    }
+
+    .back-home {
+      margin-top: 2rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: #555;
+      background: #ffffffaa;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 2;
+    }
+
+    /* Color variation for buttons */
+    .wiggle { background: #fce1e4; }
+    .blow { background: #d5eaff; }
+    .sniff { background: #fef4c3; }
+    .brain { background: #dcd1ff; }
+    .makebelieve { background: #c9fdd7; }
+    .feelings { background: #ffe1f0; }
+
+  </style>
+</head>
+<body>
+  <h1>need a distraction?</h1>
+  <div class="subtitle">pick something that feels doable right now</div>
+
+  <div class="categories">
+    <button class="category-button wiggle">Wiggle & Wiggle</button>
+    <button class="category-button blow">Blow It Out</button>
+    <button class="category-button sniff">Sniff, Taste, Touch</button>
+    <button class="category-button brain">Brain Gymnastics</button>
+    <button class="category-button makebelieve">Make-Believe Mode</button>
+    <button class="category-button feelings">Feel Things Gently</button>
+  </div>
+
+  <a href="index.html" class="back-home">← back to homepage</a>
+
+  <script>
+    // Create background floating dots
+    for (let i = 0; i < 15; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      dot.style.top = Math.random() * 100 + 'vh';
+      dot.style.left = Math.random() * 100 + 'vw';
+      dot.style.animationDelay = (Math.random() * 8) + 's';
+      document.body.appendChild(dot);
+    }
+
+    // Add click interaction (for now just alerts)
+    document.querySelectorAll('.category-button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        alert(`Coming soon: ${btn.textContent} prompts!`);
+      });
+    });
+  </script>
+</body>
+</html>
