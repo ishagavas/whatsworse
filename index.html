@@ -114,15 +114,23 @@
       padding: 0.4rem 0.8rem;
       border-radius: 20px;
       font-size: 0.85rem;
-      color: white;
+      color: #333;
       border: none;
+      cursor: pointer;
     }
 
-    .mood-bar button:nth-child(2) { background-color: #7EC8E3; }  /* calm */
-    .mood-bar button:nth-child(3) { background-color: #F18F8F; }  /* anxious */
-    .mood-bar button:nth-child(4) { background-color: #A3A3A3; }  /* numb */
-    .mood-bar button:nth-child(5) { background-color: #95D5B2; }  /* hopeful */
-    .mood-bar button:nth-child(6) { background-color: #C0B7DD; }  /* tired */
+    .mood-bar button:nth-child(2) { background-color: #A8DADC; }  /* calm - mint */
+    .mood-bar button:nth-child(3) { background-color: #FFD6BA; }  /* anxious - peach */
+    .mood-bar button:nth-child(4) { background-color: #D6CCFF; }  /* numb - lavender */
+    .mood-bar button:nth-child(5) { background-color: #C3FBD8; }  /* hopeful - mint green */
+    .mood-bar button:nth-child(6) { background-color: #FAD2E1; }  /* tired - blush pink */
+
+    #moodResponse {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      font-style: italic;
+      opacity: 0.7;
+    }
   </style>
 </head>
 <body>
@@ -149,6 +157,8 @@
     <button onclick="logMood('hopeful')">hopeful</button>
     <button onclick="logMood('tired')">tired</button>
   </div>
+
+  <div id="moodResponse"></div>
 
   <audio id="ambience" src="https://cdn.pixabay.com/audio/2022/03/15/audio_0333285b69.mp3" loop></audio>
 
@@ -222,10 +232,15 @@
     }
 
     function logMood(mood) {
-      console.log(`Mood logged: ${mood}`);
-      alert(`logged feeling: ${mood}`);
+      const responses = {
+        calm: "deep like a lake. we love that.",
+        anxious: "you are safe now.",
+        numb: "sometimes nothing is still something.",
+        hopeful: "a little light goes a long way.",
+        tired: "you did enough. rest is brave."
+      };
+      document.getElementById("moodResponse").textContent = responses[mood] || "";
     }
   </script>
 </body>
 </html>
-
