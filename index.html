@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>what's worse</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #f7d9e3, #d8eefe);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 1rem;
+      font-weight: normal;
+      margin-bottom: 2rem;
+      opacity: 0.6;
+    }
+
+    #question {
+      font-size: 1.75rem;
+      max-width: 700px;
+      margin: 0 2rem 2rem;
+      line-height: 1.4;
+    }
+
+    button {
+      background-color: #ffffffcc;
+      border: none;
+      border-radius: 30px;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ffffffee;
+    }
+  </style>
+</head>
+<body>
+  <h1>what's worse</h1>
+  <div id="question">Are your shoulders relaxed?</div>
+  <button onclick="getRandomQuestion()">🔄 Ask Me Another</button>
+
+  <script>
+    const questions = [
+      "are your shoulders relaxed?",
+      "can you push your feet into the ground?",
+      "take the deepest breath you can and see how long you can hold it",
+      "try to see if you can breath with just one nostril",
+      "can you imagine breathing with your ears?",
+      "can you breathe a shape?",
+      "can you scream a shape?",
+      "can you name 6 things you can smell?",
+      "what about 6 things you physically feel",
+      "can you list the alphabet backwards?",
+      "what about the 50 states in backwards order",
+      "can you tap your fingers together in a niche way",
+      "how many things can you count on your hand (i can explain)",
+      "can you play the piano with your toes?",
+      "how many teeth do you have again? can you count pleaseee",
+      "is there a ticklish area to your mouth?",
+      "can you move your eyes in a shape",
+      "can you name 2 things you can taste",
+      "can you try to hear yourself wink? what about blink?",
+      "can you move one toe at a time",
+      "can you shift your weight while sitting?",
+      "can you smile with your eyes?",
+      "can you trick yourself into feeling really hot? what about really cold?",
+      "think of a memory. the favorite part of today. the worst part of today. what does it smell like. what does it taste like",
+      "what’s the heaviest piece of clothing you’ve worn",
+      "what’s the heaviest thing you’ve lifted today",
+      "how many shapes can you make with your tongue. how many words can you spell",
+      "which numbers are sharp? which ones are round? which numbers are girls? and which ones are boys? which numbers are responsible?",
+      "can you hum something fuzzy. what about something scratchy",
+      "try to think in pig latin.",
+      "try to think but you think everything backwards",
+      "what is the brightest color ever",
+      "can you zoom in on whatever you’re looking at",
+      "make a map of whatever you’re looking at (start point, end point)",
+      "tell me what you can hear. if that sound had a taste what would that be like?",
+      "what part of your body do you think you can move in a perfect circle?",
+      "feel every vertebrae of your spine",
+      "try to stretch without moving",
+      "make a noise and try to give it meaning",
+      "think of a unit of time. what does it smell like",
+      "what do you feel underneath your feet? what else could it be.",
+      "take a breathe in. where is it going?",
+      "exhale. imagine the air moving around where is it headed?",
+      "what does you think is the oldest thing near you. a book? the laptop?",
+      "what part of your car do you think was built last?",
+      "relax your shoulders by 10 percent what about 20? can you jump to 50?",
+      "straighten your posture by 75 percent. now loosen it to 10 percent",
+      "what is the strongest thing you’ve done all day. what did you smell in that moment",
+      "who was your favorite interaction today? if they were a color what would they be",
+      "what is the best thing that could happen right now",
+      "exhale 10 percent. now 39 percent",
+      "can you imagine melting but very slowly",
+      "okay exhale. now think of a color. breathe in that color",
+      "what’s one thing you did right today",
+      "what is the exact opposite of what you’re feeling",
+      "can you think of a color. now give that color a song. do it with a number, maybe a letter",
+      "name restaurants in alphabetical order. what about clothing stores? vegetables?",
+      "list everything you’re grateful for but in alphabetical order",
+      "list everything that sucks in reverse alphabetical order",
+      "what about things you’re afraid of in reverse alphabetical order",
+      "tell me a smell that you’d love to never smell again",
+      "tell me a smell that you’d be like damn. if i had covid id miss that smell",
+      "what about a taste? what’s a taste you can live without? what’s a taste you can’t live without?",
+      "what was your favorite sound of today? what about most annoying sound?",
+      "what was the scariest thing that could’ve happened today. what was actually the scariest part of today.",
+      "what’s your ideal temperature right now",
+      "can you imagine breathing but your lungs are mad clean now",
+      "what’s one small win you want today?",
+      "what’s something bad that could happen but you can get through",
+      "if you had to pick one bad thing to happen today what would you pick",
+      "think of a stress give it a smell, taste, sound, look, feel",
+      "what’s the smallest tiniest thing you can see right now",
+      "whatever you’re thinking right now, sit with it for 5 minutes.",
+      "fill your belly up with air, let that air travel up your body as it exhales. what color is it?",
+      "what does the sound of your breathing sound like? can you make it super quiet?",
+      "what do you think would make the loudest noise right now",
+      "what would make the biggest scene (that doesn’t involve you 💔)"
+    ];
+
+    function getRandomQuestion() {
+      const random = questions[Math.floor(Math.random() * questions.length)];
+      document.getElementById('question').textContent = random;
+    }
+  </script>
+</body>
+</html>
+
+Update index.html with live homepage 
