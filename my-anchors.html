@@ -137,17 +137,17 @@
 
   <div class="affirmation-box" id="affirmationBox">
     <div id="affirmationText">you’ve made it to now — and that’s more than enough.</div>
-    <button onclick="newAffirmation()">new affirmation</button>
+    <button id="newAffirmationBtn">new affirmation</button>
     <div class="add-form">
       <input type="text" id="customAffirmation" placeholder="write your own...">
-      <button onclick="addAffirmation()">add to affirmations</button>
+      <button id="addAffirmationBtn">add to affirmations</button>
     </div>
   </div>
 
   <a href="index.html" class="back-home">← back to homepage</a>
 
-  <!-- Breathing dots -->
   <script>
+    // breathing dots
     for (let i = 0; i < 12; i++) {
       const dot = document.createElement('div');
       dot.className = 'dot';
@@ -157,48 +157,55 @@
       document.body.appendChild(dot);
     }
 
-    const anchorList = document.getElementById('anchorList');
-    const saved = JSON.parse(localStorage.getItem('liked-questions')) || [];
+    window.onload = function () {
+      const anchorList = document.getElementById('anchorList');
+      const affirmations = [
+        "you’ve made it to now — and that’s more than enough.",
+        "softness is not weakness.",
+        "you’re allowed to take up space, even in silence.",
+        "you’re not behind. you’re arriving."
+      ];
 
-    if (saved.length > 0) {
-      saved.forEach((q, i) => {
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.innerHTML = `<span>${q}</span><button onclick="removeAnchor(${i})">remove</button>`;
-        anchorList.appendChild(div);
-      });
-    } else {
-      anchorList.innerHTML = "<div style='opacity:0.5;'>You haven’t saved anything yet.</div>";
-    }
+      const saved = JSON.parse(localStorage.getItem('liked-questions')) || [];
 
-    function removeAnchor(index) {
-      const current = JSON.parse(localStorage.getItem('liked-questions')) || [];
-      current.splice(index, 1);
-      localStorage.setItem('liked-questions', JSON.stringify(current));
-      location.reload();
-    }
+      if (saved.length > 0) {
+        saved.forEach((q, i) => {
+          const div = document.createElement('div');
+          div.className = 'card';
+          div.innerHTML = `<span>${q}</span><button data-index="${i}">remove</button>`;
+          anchorList.appendChild(div);
+        });
 
-    const affirmations = [
-      "you’ve made it to now — and that’s more than enough.",
-      "softness is not weakness.",
-      "you’re allowed to take up space, even in silence.",
-      "you’re not behind. you’re arriving."
-    ];
-
-    function newAffirmation() {
-      const text = affirmations[Math.floor(Math.random() * affirmations.length)];
-      document.getElementById('affirmationText').textContent = text;
-    }
-
-    function addAffirmation() {
-      const input = document.getElementById('customAffirmation');
-      const val = input.value.trim();
-      if (val) {
-        affirmations.push(val);
-        input.value = '';
-        alert("Added your affirmation.");
+        // add event listeners to each remove button
+        document.querySelectorAll('.card button').forEach(btn => {
+          btn.addEventListener('click', function () {
+            const index = this.getAttribute('data-index');
+            const current = JSON.parse(localStorage.getItem('liked-questions')) || [];
+            current.splice(index, 1);
+            localStorage.setItem('liked-questions', JSON.stringify(current));
+            location.reload();
+          });
+        });
+      } else {
+        anchorList.innerHTML = "<div style='opacity:0.5;'>You haven’t saved anything yet.</div>";
       }
-    }
+
+      // affirmations
+      document.getElementById('newAffirmationBtn').onclick = function () {
+        const text = affirmations[Math.floor(Math.random() * affirmations.length)];
+        document.getElementById('affirmationText').textContent = text;
+      };
+
+      document.getElementById('addAffirmationBtn').onclick = function () {
+        const input = document.getElementById('customAffirmation');
+        const val = input.value.trim();
+        if (val) {
+          affirmations.push(val);
+          input.value = '';
+          alert("Added your affirmation.");
+        }
+      };
+    };
   </script>
 </body>
 </html>
