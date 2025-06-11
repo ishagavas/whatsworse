@@ -10,7 +10,7 @@
       margin: 0;
       padding: 2rem;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #2f2d5d, #6c4d73);
+      background: linear-gradient(135deg, #1d1b31, #4c3b52);
       color: #eee;
       min-height: 100vh;
       display: flex;
@@ -24,7 +24,7 @@
     h1 {
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     .subtitle {
@@ -97,16 +97,6 @@
       animation: fadeIn 1s ease-in-out;
     }
 
-    .visual {
-      margin-top: 2rem;
-      max-width: 300px;
-    }
-
-    .visual img {
-      width: 100%;
-      border-radius: 16px;
-    }
-
     .journal {
       margin-top: 2rem;
       font-size: 0.9rem;
@@ -153,7 +143,6 @@
     <textarea id="garbageInput" rows="4" placeholder="what are you angry about?"></textarea>
     <button onclick="submitGarbage()">submit</button>
     <div class="response" id="response"></div>
-    <div class="visual" id="visual"></div>
   </div>
 
   <div class="journal">sometimes just naming it helps let it go.</div>
@@ -163,6 +152,7 @@
   <script>
     const disliked = JSON.parse(localStorage.getItem('disliked-questions')) || [];
     const dislikedList = document.getElementById('dislikedList');
+
     if (disliked.length > 0) {
       disliked.forEach((q, i) => {
         const div = document.createElement('div');
@@ -181,36 +171,31 @@
     }
 
     const softResponses = [
-      "it's going to be okay",
-      "this will pass",
-      "you're so brave",
-      "thank you for telling me that",
-      "you're doing so good"
-    ];
-
-    const visuals = [
-      "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
-      "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
-      "https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif"
+      "you're doing so good",
+      "it's okay",
+      "thank you for letting it out",
+      "you're so amazing cutie pie",
+      "one step at a time",
+      "great job",
+      "you deserve the world angel",
+      "this will pass"
     ];
 
     function submitGarbage() {
       const input = document.getElementById('garbageInput');
       const responseBox = document.getElementById('response');
-      const visualBox = document.getElementById('visual');
 
       if (input.value.trim() === '') return;
 
       const message = softResponses[Math.floor(Math.random() * softResponses.length)];
-      const visual = visuals[Math.floor(Math.random() * visuals.length)];
-
       responseBox.textContent = message;
-      visualBox.innerHTML = `<img src="${visual}" alt="calming visual">`;
       input.value = '';
 
+      // Morning pastel gradient
       document.body.style.background = "linear-gradient(135deg, #fdf6e3, #d0f0f7)";
       document.body.style.color = "#333";
     }
   </script>
 </body>
 </html>
+
