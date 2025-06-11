@@ -107,24 +107,27 @@
       flex-wrap: wrap;
       justify-content: center;
       font-size: 0.85rem;
-      opacity: 0.7;
+      opacity: 0.95;
     }
 
     .mood-bar button {
       padding: 0.4rem 0.8rem;
       border-radius: 20px;
       font-size: 0.85rem;
-      background-color: #ffffff88;
+      color: white;
+      border: none;
     }
 
-    .mood-bar button:hover {
-      background-color: #ffffffcc;
-    }
+    .mood-bar button:nth-child(2) { background-color: #7EC8E3; }  /* calm */
+    .mood-bar button:nth-child(3) { background-color: #F18F8F; }  /* anxious */
+    .mood-bar button:nth-child(4) { background-color: #A3A3A3; }  /* numb */
+    .mood-bar button:nth-child(5) { background-color: #95D5B2; }  /* hopeful */
+    .mood-bar button:nth-child(6) { background-color: #C0B7DD; }  /* tired */
   </style>
 </head>
 <body>
   <h1>what's worse</h1>
-  <div class="tagline">strange questions that bring you back to your body</div>
+  <div class="tagline">silly questions for a silly boy</div>
   <div id="pulse-circle"></div>
 
   <div id="question">Are your shoulders relaxed?</div>
@@ -135,7 +138,8 @@
     <button onclick="logHard()">This one’s hard</button>
   </div>
 
-  <a class="link" href="my-anchors.html">visit my anchors →</a>
+  <a class="link" href="my-anchors.html">visit my anchors →</a><br/>
+  <a class="link" href="thehardthings.html">visit the hard things →</a>
 
   <div class="mood-bar">
     how are you feeling?
@@ -157,7 +161,6 @@
       "can you imagine breathing with your ears?",
       "can you breathe a shape?",
       "can you scream a shape?",
-      // ... your remaining questions
       "what would make the biggest scene (that doesn’t involve you 💔)"
     ];
 
@@ -196,14 +199,26 @@
 
     function saveFavorite() {
       const question = document.getElementById('question').textContent;
-      localStorage.setItem('favorite-question', question);
-      alert(`Saved: "${question}"`);
+      const saved = JSON.parse(localStorage.getItem('liked-questions')) || [];
+      if (!saved.includes(question)) {
+        saved.push(question);
+        localStorage.setItem('liked-questions', JSON.stringify(saved));
+        alert(`Saved: "${question}"`);
+      } else {
+        alert("Already saved.");
+      }
     }
 
     function logHard() {
       const question = document.getElementById('question').textContent;
-      console.log(`Marked hard: "${question}"`);
-      alert("Logged this one as tough.");
+      const hard = JSON.parse(localStorage.getItem('hard-questions')) || [];
+      if (!hard.includes(question)) {
+        hard.push(question);
+        localStorage.setItem('hard-questions', JSON.stringify(hard));
+        alert("Marked this one as hard.");
+      } else {
+        alert("Already marked.");
+      }
     }
 
     function logMood(mood) {
@@ -213,3 +228,4 @@
   </script>
 </body>
 </html>
+
