@@ -46,11 +46,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.3s;
-    }
-
-    .card:hover {
-      background: #ffffffee;
     }
 
     .card button {
@@ -59,11 +54,6 @@
       font-size: 0.9rem;
       color: #666;
       cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .card button:hover {
-      color: #000;
     }
 
     .affirmation-box {
@@ -87,59 +77,74 @@
       cursor: pointer;
     }
 
-    #blob {
-      position: fixed;
-      width: 60vw;
-      height: 60vw;
-      background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      filter: blur(60px);
-      z-index: -1;
-      animation: float 40s ease-in-out infinite alternate;
+    .add-form {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
-    @keyframes float {
-      0% { transform: translate(-50%, -50%) scale(1); }
-      100% { transform: translate(-60%, -40%) scale(1.2); }
+    .add-form input {
+      padding: 0.5rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
     }
 
-    .sound-toggle {
+    .back-home {
       margin-top: 2rem;
-      font-size: 0.85rem;
-      opacity: 0.5;
+      text-decoration: none;
+      font-size: 0.9rem;
+      color: #555;
+      background: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .calming-visuals {
+      margin-top: 3rem;
+      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .calming-visuals img {
+      max-width: 300px;
+      border-radius: 16px;
     }
   </style>
 </head>
 <body>
-  <div id="blob"></div>
-
   <h1>my anchors</h1>
-  <div class="subtitle">saved grounding questions</div>
+  <div class="subtitle">your saved grounding questions</div>
 
-  <div class="anchors" id="anchorList">
-    <!-- saved questions will go here -->
-  </div>
+  <div class="anchors" id="anchorList"></div>
 
-  <div class="affirmation-box" id="affirmation">
-    you’ve made it to now — and that’s more than enough.
-    <br>
+  <div class="affirmation-box" id="affirmationBox">
+    <div id="affirmationText">you’ve made it to now — and that’s more than enough.</div>
     <button onclick="newAffirmation()">new affirmation</button>
+    <div class="add-form">
+      <input type="text" id="customAffirmation" placeholder="write your own...">
+      <button onclick="addAffirmation()">add to affirmations</button>
+    </div>
   </div>
 
-  <div class="sound-toggle">
-    <button onclick="toggleSound()">toggle sound</button>
-  </div>
+  <a href="index.html" class="back-home">← back to homepage</a>
 
-  <audio id="ambience" src="https://cdn.pixabay.com/audio/2022/06/13/audio_14bc25c884.mp3" loop></audio>
+  <div class="calming-visuals">
+    <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="gentle clouds">
+    <img src="https://media.giphy.com/media/duzpaTbCUy9Vu/giphy.gif" alt="soft waves">
+  </div>
 
   <script>
+    // Load and display saved questions
     const anchorList = document.getElementById('anchorList');
-    const saved = localStorage.getItem('favorite-question');
-    if (saved) {
-      const questions = [saved]; // in the future you could support multiple
-      questions.forEach((q, i) => {
+    const saved = JSON.parse(localStorage.getItem('liked-questions')) || [];
+    if (saved.length > 0) {
+      saved.forEach((q, i) => {
         const div = document.createElement('div');
         div.className = 'card';
         div.innerHTML = `<span>${q}</span><button onclick="removeAnchor(${i})">remove</button>`;
@@ -150,33 +155,31 @@
     }
 
     function removeAnchor(index) {
-      localStorage.removeItem('favorite-question');
+      saved.splice(index, 1);
+      localStorage.setItem('liked-questions', JSON.stringify(saved));
       location.reload();
     }
 
     const affirmations = [
       "you’ve made it to now — and that’s more than enough.",
-      "you don’t have to be useful to be real.",
       "softness is not weakness.",
-      "your breath belongs to you.",
       "you’re allowed to take up space, even in silence.",
-      "not everything needs to be fixed right now.",
-      "you’re not behind. you’re arriving.",
-      "it’s okay to be a mystery, even to yourself.",
-      "your nervous system is doing its best."
+      "you’re not behind. you’re arriving."
     ];
 
     function newAffirmation() {
-      const box = document.getElementById('affirmation');
-      const a = affirmations[Math.floor(Math.random() * affirmations.length)];
-      box.innerHTML = `${a}<br><button onclick="newAffirmation()">new affirmation</button>`;
+      const text = affirmations[Math.floor(Math.random() * affirmations.length)];
+      document.getElementById('affirmationText').textContent = text;
     }
 
-    const audio = document.getElementById('ambience');
-    let isPlaying = false;
-    function toggleSound() {
-      isPlaying ? audio.pause() : audio.play();
-      isPlaying = !isPlaying;
+    function addAffirmation() {
+      const input = document.getElementById('customAffirmation');
+      const val = input.value.trim();
+      if (val) {
+        affirmations.push(val);
+        input.value = '';
+        alert("Added your affirmation.");
+      }
     }
   </script>
 </body>
