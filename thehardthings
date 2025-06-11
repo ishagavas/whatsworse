@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Hard Things – what's worse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #2f2d5d, #6c4d73);
+      color: #eee;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 2s ease, color 2s ease;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.5;
+      margin-bottom: 2rem;
+    }
+
+    .disliked-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .card {
+      background: #ffffff22;
+      border-radius: 16px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card button {
+      background: none;
+      border: none;
+      font-size: 0.9rem;
+      color: #bbb;
+      cursor: pointer;
+    }
+
+    .garbage-box {
+      margin-top: 3rem;
+      background: #3b365c;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .garbage-box textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+      resize: vertical;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .garbage-box button {
+      margin-top: 1rem;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 20px;
+      background: #fff;
+      cursor: pointer;
+      color: #444;
+    }
+
+    .response {
+      margin-top: 1.5rem;
+      font-size: 1.1rem;
+      color: #fff9f0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .visual {
+      margin-top: 2rem;
+      max-width: 300px;
+    }
+
+    .visual img {
+      width: 100%;
+      border-radius: 16px;
+    }
+
+    .journal {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    a.back-home {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: transparent url('https://i.imgur.com/VzMZIYD.png') repeat top center;
+      animation: twinkle 20s linear infinite;
+      z-index: -1;
+    }
+
+    @keyframes twinkle {
+      0% { background-position: 0 0; }
+      100% { background-position: 1000px 1000px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <h1>the hard things</h1>
+  <div class="subtitle">your soft little landfill</div>
+
+  <div class="disliked-list" id="dislikedList"></div>
+
+  <div class="garbage-box">
+    <textarea id="garbageInput" rows="4" placeholder="what are you angry about?"></textarea>
+    <button onclick="submitGarbage()">submit</button>
+    <div class="response" id="response"></div>
+    <div class="visual" id="visual"></div>
+  </div>
+
+  <div class="journal">sometimes just naming it helps let it go.</div>
+
+  <a href="index.html" class="back-home">← back to homepage</a>
+
+  <script>
+    const disliked = JSON.parse(localStorage.getItem('disliked-questions')) || [];
+    const dislikedList = document.getElementById('dislikedList');
+    if (disliked.length > 0) {
+      disliked.forEach((q, i) => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `<span>${q}</span><button onclick="removeDisliked(${i})">remove</button>`;
+        dislikedList.appendChild(div);
+      });
+    } else {
+      dislikedList.innerHTML = "<div style='opacity:0.5;'>Nothing here yet. That’s kind of nice.</div>";
+    }
+
+    function removeDisliked(index) {
+      disliked.splice(index, 1);
+      localStorage.setItem('disliked-questions', JSON.stringify(disliked));
+      location.reload();
+    }
+
+    const softResponses = [
+      "it's going to be okay",
+      "this will pass",
+      "you're so brave",
+      "thank you for telling me that",
+      "you're doing so good"
+    ];
+
+    const visuals = [
+      "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+      "https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif",
+      "https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif"
+    ];
+
+    function submitGarbage() {
+      const input = document.getElementById('garbageInput');
+      const responseBox = document.getElementById('response');
+      const visualBox = document.getElementById('visual');
+
+      if (input.value.trim() === '') return;
+
+      const message = softResponses[Math.floor(Math.random() * softResponses.length)];
+      const visual = visuals[Math.floor(Math.random() * visuals.length)];
+
+      responseBox.textContent = message;
+      visualBox.innerHTML = `<img src="${visual}" alt="calming visual">`;
+      input.value = '';
+
+      document.body.style.background = "linear-gradient(135deg, #fdf6e3, #d0f0f7)";
+      document.body.style.color = "#333";
+    }
+  </script>
+</body>
+</html>
